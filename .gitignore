@@ -34,3 +34,7 @@ build/
 
 ### Secure Bundle ###
 /src/main/resources/secure-connect-betterreads.zip
+
+### Data Dump Author and Works ###
+/src/main/resources/betterReads/ol_dump_authors_2021-09-22.txt
+/src/main/resources/betterReads/ol_dump_works_2021-09-22.txt
