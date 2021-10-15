@@ -32,6 +32,8 @@ import java.util.stream.Stream;
 @EnableConfigurationProperties(DataStaxAstraProperties.class)
 public class BetterreadsDataLoaderApplication {
 
+    private final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
+
     AuthorRepository authorRepository;
     BookRepository bookRepository;
 
@@ -84,7 +86,6 @@ public class BetterreadsDataLoaderApplication {
     }
 
     public void initWorks() {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS");
         Path path = Paths.get(worksDumpLocation);
         try {
             Stream<String> lines = Files.lines(path);
@@ -127,7 +128,7 @@ public class BetterreadsDataLoaderApplication {
                         // Book author names
                         List<String> authorNames = authorIds.stream().map(id -> authorRepository.findById(id))
                                 .map(optionalAuthor -> {
-                                    if (!optionalAuthor.isPresent()) return "Unknown Author";
+                                    if (optionalAuthor.isEmpty()) return "Unknown Author";
                                     return optionalAuthor.get().getName();
                                 }).collect(Collectors.toList());
                         book.setAuthorNames(authorNames);
